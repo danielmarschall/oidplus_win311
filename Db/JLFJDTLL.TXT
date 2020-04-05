@@ -1,0 +1,5 @@
+This OID was allocated by <a href="http://itu.int/ITU-T/X.660">Rec. ITU-T X.660</a> | ISO/IEC 9834-1.
+
+This OID is jointly administered by ISO and ITU-T according to <a href="http://itu.int/ITU-T/X.662">Rec. ITU-T X.662</a> | ISO/IEC 9834-3 "<em>Procedures for the Operation of OSI Registration Authorities: Registration of Object Identifier Arcs for Joint ISO and ITU-T Work</em>". As a consequence, all requests for registration must be jointly approved by ITU-T Study Group 17 and ISO/IEC JTC 1/SC 6. Child OIDs are recorded in the <a href="http://itu.int/go/X660">Register of arcs beneath the root arc with primary integer value 2</a>.
+
+New child OIDs will be allocated a number greater than 47, except if there is a good rationale that a compact binary encoding is needed, in which case a number less or equal to 47 can be allocated so that the OID encodes with a single octet.

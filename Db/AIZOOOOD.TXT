@@ -1,0 +1,7 @@
+This OID is for International Standards and ISO Member Bodies.
+
+Operation of this OID is in accordance with <a href="http://itu.int/ITU-T/X.660">Rec. ITU-T X.660 | ISO/IEC 9834-1</a> "Procedures for the operation of object identifier registration authorities: General procedures and top arcs of the international object identifier tree".
+
+All decisions related to child OIDs, other than the assignment of additional secondary identifiers to top-level OID <code>1</code> (see Rec. ITU-T X.660 (2004) | ISO/IEC 9834-1:2004, clause A.5), will be recorded as amendments to Rec. ITU-T X.660 | ISO/IEC 9834-1 (such changes to the common text will be regarded as editorial by ITU-T).
+
+From Rec. ITU-T X.660 (2004) | ISO/IEC 9834-1:2004, "the top-level arcs are restricted to three arcs numbered 0 to 2; and the arcs beneath root arcs <code>0</code> and <code>1</code> are restricted to forty arcs numbered <code>0</code> to <code>39</code>." This enables optimized encodings to be used in which the values of the top two arcs for all arcs under top-level arcs <code>0</code> and <code>1</code> encode in a single octet in an object identifier encoding (see the Rec. ITU-T X.690 series | ISO/IEC 8825 multi-part Standard).

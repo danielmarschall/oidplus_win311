@@ -1,0 +1,11 @@
+Subsequent OIDs identify ITU-T Recommendations (not jointly published with ISO/IEC) and ITU members.
+
+This arc is also called <code>ccitt(0)</code> to recall that CCITT used to be an organization independent from ITU-T.
+
+Identifier <strong><code>itu-r</code></strong> was added by ITU-T Study Group 17 in March 2004 (and was ratified by ISO/IEC JTC 1/SC 6 in Sep 2005). It can only be used as a 'NameAndNumberForm' (that is, followed by number <code>5</code> between parentheses) for OIDs that commence with <code>{itu-r(0) <a href="http://oid-info.com/get/0.5">r-recommendation(5)</a>}</code> (see <a href="http://itu.int/rec/T-REC-X.680/en">Rec. ITU-T X.680 | ISO/IEC 9834-1</a>, clause A.5, for more details on this specific case). Consequently Unicode label "<code>ITU-R</code>" can only be used for "<a href="http://oid-info.com/faq.htm#iri">OID-IRIs</a>" that designate OIDs under the <code>{itu-r(0) <a href="http://oid-info.com/get/0.5">r-recommendation(5)</a>}</code> arc.
+
+Operation is in accordance with <a href="http://itu.int/rec/T-REC-X.660/en">Rec. ITU-T X.660 | ISO/IEC 9834-1</a> and is under the guidance of <a href="http://itu.int/ITU-T/studygroups/com17/index.asp">ITU-T Study Group 17</a>.
+
+All decisions related to subsequent arcs, other than the assignment of additional secondary identifiers to top-level arc <code>0</code> (see Rec. ITU-T X.660 | ISO/IEC 9834-1, clause A.5), will be recorded ad amendments to Rec. ITU-T X.660 | ISO/IEC 9834-1 (such changes to the joint ITU-T | ISO/IEC text will be regarded as editorial by ISO).
+
+From Rec. ITU-T X.660 | ISO/IEC 9834-1, "the top-level arcs are restricted to three arcs numbered <code>0</code> to <code>2</code>; and the arcs beneath root arcs <code>0</code> and <code>1</code> are restricted to forty arcs numbered <code>0</code> to <code>39</code>. This enables optimized encodings to be used in which the values of the top two arcs for all arcs under top-level arcs <code>0</code> and <code>1</code> encode in a single octet in an object identifier encoding (see the Rec. ITU-T X.690 series | ISO/IEC 8825 multi-part Standard).

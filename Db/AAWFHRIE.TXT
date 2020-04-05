@@ -1,0 +1,14 @@
+This OID can be used by anyone, without any permission, for the purpose of documenting examples of object identifiers (in the same way as "example.com" is defined in IETF RFC 2606 as an example for web sites).
+
+
+
+
+
+
+
+
+
+
+
+
+
