@@ -12,28 +12,7 @@ type
   TForm1 = class(TForm)
     Outline1: TOutline;
     Notebook1: TNotebook;
-    Label1: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    Label6: TLabel;
-    Label7: TLabel;
-    Label15: TLabel;
-    Edit3: TEdit;
     Memo1: TMemo;
-    Edit4: TEdit;
-    CheckBox1: TCheckBox;
-    ComboBox1: TComboBox;
-    Edit5: TEdit;
-    Edit6: TEdit;
-    ListBox1: TListBox;
-    Edit7: TEdit;
-    Button1: TButton;
-    Button3: TButton;
-    Button2: TButton;
-    Button4: TButton;
-    Edit1: TEdit;
-    Button6: TButton;
     Label2: TLabel;
     Label8: TLabel;
     Label9: TLabel;
@@ -54,6 +33,29 @@ type
     Label14: TLabel;
     Edit8: TEdit;
     Button7: TButton;
+    Panel1: TPanel;
+    Label1: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    CheckBox1: TCheckBox;
+    ComboBox1: TComboBox;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    ListBox1: TListBox;
+    Edit7: TEdit;
+    Button1: TButton;
+    Button3: TButton;
+    Panel2: TPanel;
+    Button2: TButton;
+    Button4: TButton;
+    Edit1: TEdit;
+    Button6: TButton;
+    Label15: TLabel;
     procedure Outline1Change(Sender: TObject; Node: integer);
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -746,67 +748,6 @@ begin
   end;
 end;
 
-function DirectoryExists(const Directory: string; FollowLink: Boolean): Boolean; { Source: Delphi 10.3.3 }
-{
-var
-  Code: Cardinal;
-  Handle: THandle;
-  LastError: Cardinal;
-const
-  faSymLink = $00000400; // Available on POSIX and Vista and above
-  INVALID_FILE_ATTRIBUTES = DWORD($FFFFFFFF);
-begin
-  Result := False;
-  Code := GetFileAttributes(PChar(Directory));
-
-  if Code <> INVALID_FILE_ATTRIBUTES then
-  begin
-    if faSymLink and Code = 0 then
-      Result := faDirectory and Code <> 0
-    else
-    begin
-      if FollowLink then
-      begin
-        Handle := CreateFile(PChar(Directory), GENERIC_READ, FILE_SHARE_READ, nil,
-          OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
-        if Handle <> INVALID_HANDLE_VALUE then
-        begin
-          CloseHandle(Handle);
-          Result := faDirectory and Code <> 0;
-        end;
-      end
-      else if faDirectory and Code <> 0 then
-        Result := True
-      else
-      begin
-        Handle := CreateFile(PChar(Directory), GENERIC_READ, FILE_SHARE_READ, nil,
-          OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
-        if Handle <> INVALID_HANDLE_VALUE then
-        begin
-          CloseHandle(Handle);
-          Result := False;
-        end
-        else
-          Result := True;
-      end;
-    end;
-  end
-  else
-  begin
-    LastError := GetLastError;
-    Result := (LastError <> ERROR_FILE_NOT_FOUND) and
-      (LastError <> ERROR_PATH_NOT_FOUND) and
-      (LastError <> ERROR_BAD_PATHNAME) and
-      (LastError <> ERROR_INVALID_NAME) and
-      (LastError <> ERROR_BAD_NETPATH) and
-      (LastError <> ERROR_NOT_READY) and
-      (LastError <> ERROR_BAD_NET_NAME);
-  end;
-}
-begin
-  { TODO }
-end;
-
 function IniValueExists(ini: TIniFile; const Section, Ident: string): Boolean;
 var
   S: TStrings;
@@ -817,6 +758,22 @@ begin
     Result := S.IndexOf(Ident) > -1;
   finally
     S.Free;
+  end;
+end;
+
+var
+  MkDirTriedOnce: boolean; { Avoid that the debugger always shows the exception }
+procedure MakeDirIfRequired(dirname: string);
+begin
+  if dirname[Length(dirname)] = '\' then dirname := Copy(dirname, 1, Length(dirname)-1);
+
+  if not MkDirTriedOnce then
+  begin
+    try
+      MkDir(dirname);
+    except
+    end;
+    MkDirTriedOnce := true;
   end;
 end;
 
@@ -836,11 +793,7 @@ begin
     begin
       result := ini.ReadString('SETTINGS', 'DATA', 'DB\');
     end;
-    if not DirectoryExists(result, true) then MkDir(result);
-    if not DirectoryExists(result, true) then
-    begin
-      ShowError('Cannot create database directory '+result);
-    end;
+    MakeDirIfRequired(result);
   finally
     ini.Free;
   end;
@@ -927,7 +880,7 @@ begin
   if Key in ['a'..'z'] then Key := UpCase(Key);
   if not (Key in ['A'..'Z', '-']) then
   begin
-    { Beep; TODO }
+    MessageBeep(0);
     Key := #0;
   end;
 end;
@@ -989,7 +942,7 @@ begin
     end
     else
     begin
-      { Beep; TODO }
+      MessageBeep(0);
     end;
 
     Key := 0;
