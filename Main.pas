@@ -1,7 +1,5 @@
 unit Main;
 
-{ This source code is only compatible with Delphi 1.0 ! }
-
 interface
 
 uses
@@ -154,9 +152,6 @@ var
   l: TList;
   sl: TStringList;
   workItem: TWorkItem;
-label
-  continuework,
-  ende;
 begin
   l := TList.Create;
   sl := TStringList.Create;
@@ -167,52 +162,48 @@ begin
   workItem.nod := nod;
   l.Add(workItem);
 
-continuework:
-
-  if l.Count = 0 then goto ende;
-  workItem := l.Items[l.Count-1];
-  oid := workItem.sectionName;
-  ini := workItem.ini;
-  nod := workItem.nod;
-  workItem.Free;
-  l.Delete(l.Count-1);
-
-  if oid = 'OID:' then
+  while l.Count > 0 do
   begin
-    nod := Outline1.AddChild(nod, TITLE_OID);
-  end
-  else
-  begin
-    asn1ids := ini.ReadString(oid, 'asn1id', '');
-    if ini.ReadBool(oid, 'draft', false) then
-      nod := Outline1.AddChild(nod, Trim(oid+' '+Copy(asn1ids,1,Pos(',',asn1ids+',')-1))+' [DRAFT]')
+    workItem := l.Items[l.Count-1];
+    oid := workItem.sectionName;
+    ini := workItem.ini;
+    nod := workItem.nod;
+    workItem.Free;
+    l.Delete(l.Count-1);
+
+    if oid = 'OID:' then
+    begin
+      nod := Outline1.AddChild(nod, TITLE_OID);
+    end
     else
-      nod := Outline1.AddChild(nod, Trim(oid+' '+Copy(asn1ids,1,Pos(',',asn1ids+',')-1)));
-  end;
-  sl.Clear;
-  for i := ini.ReadInteger(oid, 'delegates', 0) downto 1 do
-  begin
-    sectionName := ini.ReadString(oid, 'delegate'+IntToStr(i), '');
-    if sectionName = '' then continue;
-    sl.Add(sectionName);
-  end;
-  SortSL(sl);
-  for i := sl.Count-1 downto 0 do
-  begin
-    sectionName := sl.Strings[i];
+    begin
+      asn1ids := ini.ReadString(oid, 'asn1id', '');
+      if ini.ReadBool(oid, 'draft', false) then
+        nod := Outline1.AddChild(nod, Trim(oid+' '+Copy(asn1ids,1,Pos(',',asn1ids+',')-1))+' [DRAFT]')
+      else
+        nod := Outline1.AddChild(nod, Trim(oid+' '+Copy(asn1ids,1,Pos(',',asn1ids+',')-1)));
+    end;
+    sl.Clear;
+    for i := ini.ReadInteger(oid, 'delegates', 0) downto 1 do
+    begin
+      sectionName := ini.ReadString(oid, 'delegate'+IntToStr(i), '');
+      if sectionName = '' then continue;
+      sl.Add(sectionName);
+    end;
+    SortSL(sl);
+    for i := sl.Count-1 downto 0 do
+    begin
+      sectionName := sl.Strings[i];
 
-    workItem := TWorkItem.Create;
-    workItem.sectionName := sectionName;
-    workItem.ini := ini;
-    workItem.nod := nod;
-    l.Add(workItem);
+      workItem := TWorkItem.Create;
+      workItem.sectionName := sectionName;
+      workItem.ini := ini;
+      workItem.nod := nod;
+      l.Add(workItem);
+    end;
+    if (oid = 'OID:') or (sl.Count < 125) then
+      ExpandNodeAndParents(Outline1.Items[nod]);
   end;
-  if (oid = 'OID:') or (sl.Count < 125) then
-    ExpandNodeAndParents(Outline1.Items[nod]);
-
-  goto continuework;
-
-ende:
 
   sl.Free;
   l.Free;
@@ -694,7 +685,7 @@ begin
         txtFile := ini.ReadString(Edit4.Text, 'information', '');
         if FileExists(DBPath+txtFile) then
         begin
-          DeleteFile(DBPath+txtFile);
+          SysUtils.DeleteFile(DBPath+txtFile);
         end;
         if txtFile <> '' then
         begin
